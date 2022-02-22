@@ -11,12 +11,14 @@ export abstract class Weapon extends Item {
     protected baseDurability: number,
     protected durabilityModifier: number,
 
-    protected value: number,
-    protected name: string,
-    protected weight: number,
+    value: number,
+    name: string,
+    weight: number,
   ) {
     super(value, name, weight);
   }
+
+  abstract polish():void;
 
   public get getDamage(): number {
     return this.baseDamage + this.damageModifier;

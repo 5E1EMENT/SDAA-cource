@@ -3,14 +3,14 @@ import { Weapon } from './Weapon';
 // your code goes here
 export class Sword extends Weapon {
   constructor(
-    protected baseDamage: number,
-    protected damageModifier: number,
-    protected baseDurability: number,
-    protected durabilityModifier: number,
+    baseDamage: number,
+    damageModifier: number,
+    baseDurability: number,
+    durabilityModifier: number,
 
-    protected value: number = 1,
-    protected weight: number = 10,
-    protected name: string = 'Sword',
+    value: number = 1,
+    weight: number = 10,
+    name: string = 'Sword',
   ) {
     super(
       baseDamage,
