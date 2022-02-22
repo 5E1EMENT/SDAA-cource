@@ -16,8 +16,8 @@ export class Bow extends Weapon {
   ) {
     super(name, baseDamage, baseDurability, value, weight);
 
-    this.damageModifier = damageModifier;
-    this.durabilityModifier = durabilityModifier;
+    this.setDamageModifier(damageModifier);
+    this.setDurabilityModifier(durabilityModifier);
   }
 
   polish(): void {

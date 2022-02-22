@@ -29,6 +29,14 @@ export abstract class Weapon extends Item {
     return this.baseDamage + this.damageModifier;
   }
 
+  protected setDamageModifier(damageModifier: number): void {
+    this.damageModifier = damageModifier;
+  }
+
+  protected setDurabilityModifier(durabilityModifier: number): void {
+    this.durabilityModifier = durabilityModifier;
+  }
+
   public get getDurability(): number {
     return +(
       this.baseDurability +

@@ -35,4 +35,8 @@ export class Consumable extends Item {
   public setConsumed(consumed: boolean) {
     this.consumed = consumed;
   }
+
+  public setSpoiled(spoiled: boolean) {
+    this.spoiled = spoiled;
+  }
 }

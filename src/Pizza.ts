@@ -13,8 +13,8 @@ export class Pizza extends Consumable {
   ) {
     super(name, value, weight, spoiled);
 
-    this.consumed = false;
-    this.spoiled = spoiled;
+    this.setConsumed(false);
+    this.setSpoiled(spoiled);
   }
 
   public eat(): string {
