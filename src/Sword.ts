@@ -8,9 +8,9 @@ export class Sword extends Weapon {
     baseDurability: number,
     durabilityModifier: number,
 
+    name: string = 'Sword',
     value: number = 1,
     weight: number = 10,
-    name: string = 'Sword',
   ) {
     super(name, baseDamage, baseDurability, value, weight);
 
