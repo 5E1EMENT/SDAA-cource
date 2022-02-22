@@ -5,20 +5,25 @@ export abstract class Weapon extends Item {
   protected static readonly MODIFIER_CHANGE_RATE: number = 0.05;
   private numberOfUses: number = 1;
 
-  constructor(
-    protected baseDamage: number,
-    protected damageModifier: number,
-    protected baseDurability: number,
-    protected durabilityModifier: number,
+  protected baseDamage: number;
+  protected damageModifier: number;
+  protected baseDurability: number;
+  protected durabilityModifier: number;
 
-    value: number,
+  constructor(
     name: string,
+    baseDamage: number,
+    baseDurability: number,
+    value: number,
     weight: number,
   ) {
-    super(value, name, weight);
+    super(name, value, weight);
+
+    this.baseDamage = baseDamage;
+    this.baseDurability = baseDurability;
   }
 
-  abstract polish():void;
+  abstract polish(): void;
 
   public get getDamage(): number {
     return this.baseDamage + this.damageModifier;

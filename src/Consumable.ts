@@ -2,14 +2,13 @@ import { Item } from './Item';
 
 // your code goes here
 export class Consumable extends Item {
-  constructor(
-    value: number,
-    name: string,
-    weight: number,
-    protected consumed: boolean = false,
-    protected spoiled: boolean,
-  ) {
-    super(value, name, weight);
+  protected consumed: boolean = false;
+  protected spoiled: boolean;
+
+  constructor(name: string, value: number, weight: number, spoiled: boolean) {
+    super(name, value, weight);
+
+    this.spoiled = spoiled;
   }
 
   public use(): string {

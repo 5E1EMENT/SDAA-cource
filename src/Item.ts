@@ -3,15 +3,17 @@ import { Comparable } from './Comparable';
 let counter = 0;
 
 export abstract class Item implements Comparable<Item> {
-  private id:number = 0;
+  private id: number = 0;
+  protected value: number;
+  protected name: string;
+  protected weight: number;
 
-  constructor(
-    protected value: number,
-    protected name: string,
-    protected weight: number,
-  ) {
+  constructor(name: string, value: number, weight: number) {
     counter += 1;
     this.id = counter;
+    this.name = name;
+    this.value = value;
+    this.weight = weight;
   }
 
   abstract use(): void;

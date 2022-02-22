@@ -14,15 +14,10 @@ export class Bow extends Weapon {
     weight: number = 5,
     name: string = 'Bow',
   ) {
-    super(
-      baseDamage,
-      damageModifier,
-      baseDurability,
-      durabilityModifier,
-      value,
-      name,
-      weight,
-    );
+    super(name, baseDamage, baseDurability, value, weight);
+
+    this.damageModifier = damageModifier;
+    this.durabilityModifier = durabilityModifier;
   }
 
   polish(): void {

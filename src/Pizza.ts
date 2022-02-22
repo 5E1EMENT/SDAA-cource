@@ -10,9 +10,11 @@ export class Pizza extends Consumable {
     value: number = 3,
     name: string = 'Pizza',
     weight: number = 1,
-    consumed: boolean = false,
   ) {
-    super(value, name, weight, consumed, spoiled);
+    super(name, value, weight, spoiled);
+
+    this.consumed = false;
+    this.spoiled = spoiled;
   }
 
   public eat(): string {
