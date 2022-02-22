@@ -3,9 +3,9 @@ import { Item } from './Item';
 // your code goes here
 export class Consumable extends Item {
   constructor(
-    protected value: number,
-    protected name: string,
-    protected weight: number,
+    value: number,
+    name: string,
+    weight: number,
     protected consumed: boolean = false,
     protected spoiled: boolean,
   ) {

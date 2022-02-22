@@ -15,7 +15,6 @@ export abstract class Item implements Comparable<Item> {
   }
 
   abstract use(): void;
-
   public toString(): string {
     return `${this.name} - Value: ${this.value}, Weight: ${this.weight}`;
   }
