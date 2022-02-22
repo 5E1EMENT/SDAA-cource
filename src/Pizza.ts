@@ -17,14 +17,22 @@ export class Pizza extends Consumable {
     this.setSpoiled(spoiled);
   }
 
+  private getSlicesEaten(): number {
+    return this.slicesEaten;
+  }
+
+  private getNumberOfSlices(): number {
+    return this.slicesEaten;
+  }
+
   public eat(): string {
-    if (this.slicesEaten < this.numberOfSlices) {
+    if (this.getSlicesEaten() < this.getNumberOfSlices()) {
       this.setSlicesEaten(1);
-      if (this.slicesEaten >= this.numberOfSlices) {
+      if (this.getSlicesEaten() >= this.getNumberOfSlices()) {
         this.setConsumed(true);
       }
 
-      return `You eat a slice of the ${this.name}. Slices eaten: ${this.slicesEaten}`;
+      return `You eat a slice of the ${this.getName()}. Slices eaten: ${this.getSlicesEaten()}`;
     }
     return 'There is no pizza anymore';
   }

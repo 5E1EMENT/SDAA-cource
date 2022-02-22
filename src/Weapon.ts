@@ -33,7 +33,7 @@ export abstract class Weapon extends Item {
     return this.baseDamage + this.damageModifier;
   }
 
-  public getDamageModifier():number {
+  public getDamageModifier(): number {
     return this.damageModifier;
   }
 
@@ -49,7 +49,7 @@ export abstract class Weapon extends Item {
     return this.durabilityModifier;
   }
 
-  public get getDurability(): number {
+  public getDurability(): number {
     return +(
       this.baseDurability +
       this.durabilityModifier -
@@ -58,12 +58,12 @@ export abstract class Weapon extends Item {
   }
 
   public toString(): string {
-    return `${this.name} - Value: ${this.value}, Weight: ${this.weight}, Durability: ${this.getDurability}%`;
+    return `${this.getName()} - Value: ${this.getValue()}, Weight: ${this.getWeight()}, Durability: ${this.getDurability()}%`;
   }
 
   private checkPreviousUsageWithEmptyDurability(): boolean {
     const prevNumbersOfUsage = this.numberOfUses - 1;
-    if (this.getDurability - prevNumbersOfUsage <= 0) {
+    if (this.getDurability() - prevNumbersOfUsage <= 0) {
       return false;
     }
     return true;
@@ -72,12 +72,14 @@ export abstract class Weapon extends Item {
   public use(): string {
     if (this.checkPreviousUsageWithEmptyDurability()) {
       this.numberOfUses += 1;
-      const isWeaponBroken = this.getDurability <= 0;
-      const brokenMessage = isWeaponBroken ? `The ${this.name} breaks` : '';
+      const isWeaponBroken = this.getDurability() <= 0;
+      const brokenMessage = isWeaponBroken
+        ? `The ${this.getName()} breaks`
+        : '';
 
-      return `You use the ${this.name}, dealing ${this.getDamage()} points of damage. ${brokenMessage}`;
+      return `You use the ${this.getName()}, dealing ${this.getDamage()} points of damage. ${brokenMessage}`;
     }
 
-    return `You can't use the ${this.name}, it is broken.`;
+    return `You can't use the ${this.getName()}, it is broken.`;
   }
 }

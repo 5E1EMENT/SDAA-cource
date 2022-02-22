@@ -12,16 +12,16 @@ export class Consumable extends Item {
   }
 
   public use(): string {
-    return !this.spoiled && !this.consumed
+    return !this.isSpoiled() && !this.isConsumed()
       ? this.eat()
-      : this.consumed
-      ? `There is nothing left of the ${this.name} to consume.`
+      : this.isConsumed()
+      ? `There is nothing left of the ${this.getName()} to consume.`
       : '';
   }
   public eat(): string {
-    return !this.spoiled
-      ? `You eat the ${this.name}`
-      : `You eat the ${this.name}. You feel sick.`;
+    return !this.isSpoiled()
+      ? `You eat the ${this.getName()}`
+      : `You eat the ${this.getName()}. You feel sick.`;
   }
 
   public isConsumed(): boolean {
