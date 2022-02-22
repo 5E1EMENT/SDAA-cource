@@ -24,15 +24,7 @@ export class Bow extends Weapon {
     const limit = this.getDurabilityModifier() <= Bow.DUABILITY_LIMIT;
 
     if (limit) {
-      this.updateDurabilityModifier();
+      this.setDurabilityModifier(Weapon.MODIFIER_CHANGE_RATE);
     }
-  }
-
-  getDurabilityModifier(): number {
-    return this.durabilityModifier;
-  }
-
-  updateDurabilityModifier(): void {
-    this.durabilityModifier += Weapon.MODIFIER_CHANGE_RATE;
   }
 }

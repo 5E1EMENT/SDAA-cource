@@ -6,9 +6,9 @@ export abstract class Weapon extends Item {
   private numberOfUses: number = 1;
 
   protected baseDamage: number;
-  protected damageModifier: number;
-  protected baseDurability: number;
-  protected durabilityModifier: number;
+  private damageModifier: number;
+  private baseDurability: number;
+  private durabilityModifier: number;
 
   constructor(
     name: string,
@@ -25,8 +25,12 @@ export abstract class Weapon extends Item {
 
   abstract polish(): void;
 
-  public get getDamage(): number {
+  public getDamage(): number {
     return this.baseDamage + this.damageModifier;
+  }
+
+  public getDamageModifier():number {
+    return this.damageModifier;
   }
 
   protected setDamageModifier(damageModifier: number): void {
@@ -35,6 +39,10 @@ export abstract class Weapon extends Item {
 
   protected setDurabilityModifier(durabilityModifier: number): void {
     this.durabilityModifier = durabilityModifier;
+  }
+
+  protected getDurabilityModifier(): number {
+    return this.durabilityModifier;
   }
 
   public get getDurability(): number {
@@ -63,7 +71,7 @@ export abstract class Weapon extends Item {
       const isWeaponBroken = this.getDurability <= 0;
       const brokenMessage = isWeaponBroken ? `The ${this.name} breaks` : '';
 
-      return `You use the ${this.name}, dealing ${this.getDamage} points of damage. ${brokenMessage}`;
+      return `You use the ${this.name}, dealing ${this.getDamage()} points of damage. ${brokenMessage}`;
     }
 
     return `You can't use the ${this.name}, it is broken.`;
