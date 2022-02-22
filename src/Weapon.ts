@@ -25,6 +25,10 @@ export abstract class Weapon extends Item {
 
   abstract polish(): void;
 
+  protected getBaseDamage(): number {
+    return this.baseDamage;
+  }
+
   public getDamage(): number {
     return this.baseDamage + this.damageModifier;
   }
