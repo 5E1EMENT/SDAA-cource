@@ -8,7 +8,7 @@ export class Consumable extends Item {
   constructor(name: string, value: number, weight: number, spoiled: boolean) {
     super(name, value, weight);
 
-    this.spoiled = spoiled;
+    this.setSpoiled(spoiled);
   }
 
   public use(): string {
