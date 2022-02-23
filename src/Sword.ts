@@ -20,8 +20,9 @@ export class Sword extends Weapon {
 
   polish(): void {
     const limit = this.getBaseDamage() * 0.25;
+
     if (this.getDamageModifier() < limit) {
-      this.setDamageModifier(Weapon.MODIFIER_CHANGE_RATE);
+      this.setDamageModifier(this.getModifierChangeRate());
     }
   }
 }

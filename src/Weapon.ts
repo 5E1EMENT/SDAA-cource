@@ -2,7 +2,7 @@ import { Item } from './Item';
 
 // your code goes here
 export abstract class Weapon extends Item {
-  protected static readonly MODIFIER_CHANGE_RATE: number = 0.05;
+  private static readonly MODIFIER_CHANGE_RATE: number = 0.05;
   private numberOfUses: number = 1;
 
   protected baseDamage: number;
@@ -49,11 +49,15 @@ export abstract class Weapon extends Item {
     return this.durabilityModifier;
   }
 
+  public getModifierChangeRate(): number {
+    return Weapon.MODIFIER_CHANGE_RATE;
+  }
+
   public getDurability(): number {
     return +(
       this.baseDurability +
       this.durabilityModifier -
-      Weapon.MODIFIER_CHANGE_RATE * this.numberOfUses
+      this.getModifierChangeRate() * this.numberOfUses
     ).toFixed(3);
   }
 
