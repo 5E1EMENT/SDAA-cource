@@ -3,7 +3,7 @@ import { Comparable } from './Comparable';
 let counter = 0;
 
 export abstract class Item implements Comparable<Item> {
-  private id: number = 0;
+  private id = 0;
   protected value: number;
   protected name: string;
   protected weight: number;
