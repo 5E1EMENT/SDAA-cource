@@ -1,42 +1,43 @@
-import { Item } from './Item';
+import { Item } from './Item'
 
-// your code goes here
 export class Consumable extends Item {
-  protected consumed: boolean = false;
-  protected spoiled: boolean;
+  private consumed = false
+  private spoiled: boolean
 
   constructor(name: string, value: number, weight: number, spoiled: boolean) {
-    super(name, value, weight);
+    super(name, value, weight)
 
-    this.setSpoiled(spoiled);
+    this.setSpoiled(spoiled)
   }
 
   public use(): string {
-    return !this.isSpoiled() && !this.isConsumed()
-      ? this.eat()
-      : this.isConsumed()
-      ? `There is nothing left of the ${this.getName()} to consume.`
-      : '';
+    if (!this.isSpoiled() && !this.isConsumed()) {
+      this.eat()
+    } else if (this.isConsumed() && this.isSpoiled()) {
+      return ''
+    } else if (this.isConsumed()) {
+      return `There is nothing left of the ${this.getName()} to consume.`
+    }
   }
   public eat(): string {
     return !this.isSpoiled()
       ? `You eat the ${this.getName()}`
-      : `You eat the ${this.getName()}. You feel sick.`;
+      : `You eat the ${this.getName()}. You feel sick.`
   }
 
   public isConsumed(): boolean {
-    return this.consumed;
+    return this.consumed
   }
 
   public isSpoiled(): boolean {
-    return this.spoiled;
+    return this.spoiled
   }
 
   public setConsumed(consumed: boolean) {
-    this.consumed = consumed;
+    this.consumed = consumed
   }
 
   public setSpoiled(spoiled: boolean) {
-    this.spoiled = spoiled;
+    this.spoiled = spoiled
   }
 }

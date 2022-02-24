@@ -1,28 +1,25 @@
-import { Weapon } from './Weapon';
+import { Weapon } from './Weapon'
 
-// your code goes here
 export class Sword extends Weapon {
   constructor(
     baseDamage: number,
-    damageModifier: number,
     baseDurability: number,
+    damageModifier: number,
     durabilityModifier: number,
-
-    name: string = 'Sword',
-    value: number = 1,
-    weight: number = 10,
+    value = 1,
+    weight = 10
   ) {
-    super(name, baseDamage, baseDurability, value, weight);
-
-    this.setDamageModifier(damageModifier);
-    this.setDurabilityModifier(durabilityModifier);
+    const name = 'Sword'
+    super(name, baseDamage, baseDurability, value, weight)
+    this.setDamageModifier(damageModifier)
+    this.setDurabilityModifier(durabilityModifier)
   }
 
   polish(): void {
-    const limit = this.getBaseDamage() * 0.25;
+    const limit = this.getBaseDamage() * 0.25 + this.getBaseDamage()
 
     if (this.getDamageModifier() < limit) {
-      this.setDamageModifier(this.getModifierChangeRate());
+      this.setDamageModifier(Weapon.MODIFIER_CHANGE_RATE)
     }
   }
 }
