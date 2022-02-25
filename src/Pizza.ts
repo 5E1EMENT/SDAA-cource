@@ -1,19 +1,9 @@
 import { Consumable } from './Consumable'
 
 export class Pizza extends Consumable {
-  constructor(
-    private numberOfSlices: number,
-    spoiled: boolean,
-    private slicesEaten: number,
-
-    value = 3,
-    name = 'Pizza',
-    weight = 1
-  ) {
-    super(name, value, weight, spoiled)
-
-    this.setConsumed(false)
-    this.setSpoiled(spoiled)
+  private slicesEaten = 0
+  constructor(private numberOfSlices: number, spoiled: boolean) {
+    super('Pizza', 0, 0, spoiled)
   }
 
   private getSlicesEaten(): number {
@@ -25,13 +15,15 @@ export class Pizza extends Consumable {
   }
 
   public eat(): string {
-    if (this.getSlicesEaten() < this.getNumberOfSlices()) {
+    if (this.slicesEaten < this.numberOfSlices) {
       this.increaseSlicesEaten(1)
-      if (this.getSlicesEaten() >= this.getNumberOfSlices()) {
+      if (this.slicesEaten >= this.numberOfSlices) {
         this.setConsumed(true)
       }
 
-      return `You eat a slice of the ${this.getName()}. Slices eaten: ${this.getSlicesEaten()}`
+      return `You eat a slice of the ${this.getName()}. Slices eaten: ${
+        this.slicesEaten
+      })}`
     }
     return 'There is no pizza anymore'
   }

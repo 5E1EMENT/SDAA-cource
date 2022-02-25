@@ -4,21 +4,19 @@ export class Sword extends Weapon {
   constructor(
     baseDamage: number,
     baseDurability: number,
-    damageModifier: number,
-    durabilityModifier: number,
-    value = 1,
-    weight = 10
+    value: number,
+    weight: number
   ) {
-    const name = 'Sword'
-    super(name, baseDamage, baseDurability, value, weight)
-    this.setDamageModifier(damageModifier)
-    this.setDurabilityModifier(durabilityModifier)
+    super('Sword', baseDamage, baseDurability, value, weight)
   }
 
   polish(): void {
-    const limit = this.getBaseDamage() * 0.25 + this.getBaseDamage()
+    const modifier = this.getDamageModifier()
+    const newModifier = modifier + Weapon.MODIFIER_CHANGE_RATE
+    const newDamage = this.getDamage() + newModifier
+    const limit = this.getBaseDamage() * 0.25 + newDamage
 
-    if (this.getDamageModifier() < limit) {
+    if (newDamage < limit) {
       this.setDamageModifier(Weapon.MODIFIER_CHANGE_RATE)
     }
   }

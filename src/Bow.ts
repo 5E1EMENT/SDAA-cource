@@ -6,20 +6,17 @@ export class Bow extends Weapon {
   constructor(
     baseDamage: number,
     baseDurability: number,
-    damageModifier: number,
-    durabilityModifier: number,
-    value = 2,
-    weight = 5
+    value: number,
+    weight: number
   ) {
-    const name = 'Bow'
-    super(name, baseDamage, baseDurability, value, weight)
-
-    this.setDamageModifier(damageModifier)
-    this.setDurabilityModifier(durabilityModifier)
+    super('Bow', baseDamage, baseDurability, value, weight)
   }
 
   polish(): void {
-    const limit = this.getDurabilityModifier() <= Bow.DUABILITY_LIMIT
+    const modifier = this.getDurabilityModifier()
+    const newModifier = modifier + Weapon.MODIFIER_CHANGE_RATE
+    const durability = this.getDurability() + newModifier
+    const limit = durability < Bow.DUABILITY_LIMIT
 
     if (limit) {
       this.setDurabilityModifier(Weapon.MODIFIER_CHANGE_RATE)

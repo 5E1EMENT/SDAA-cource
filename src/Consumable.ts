@@ -11,18 +11,20 @@ export class Consumable extends Item {
   }
 
   public use(): string {
-    if (!this.isSpoiled() && !this.isConsumed()) {
-      this.eat()
-    } else if (this.isConsumed() && this.isSpoiled()) {
-      return ''
-    } else if (this.isConsumed()) {
-      return `There is nothing left of the ${this.getName()} to consume.`
+    if (!this.consumed && !this.spoiled) {
+      return this.eat()
     }
+    return ''
   }
+
   public eat(): string {
-    return !this.isSpoiled()
-      ? `You eat the ${this.getName()}`
-      : `You eat the ${this.getName()}. You feel sick.`
+    const spoiled = this.isSpoiled()
+
+    if (!spoiled) {
+      return `You eat the ${this.getName()}`
+    } else {
+      return `You eat the ${this.getName()}. You feel sick.`
+    }
   }
 
   public isConsumed(): boolean {

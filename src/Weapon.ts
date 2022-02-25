@@ -1,13 +1,12 @@
 import { Item } from './Item'
-
+import { toPercentage } from './utils'
 export abstract class Weapon extends Item {
   static readonly MODIFIER_CHANGE_RATE: number = 0.05
-  private numberOfUses = 1
 
   private baseDamage: number
-  private damageModifier: number
+  private damageModifier = 0
   private baseDurability: number
-  private durabilityModifier: number
+  private durabilityModifier = 0
 
   constructor(
     name: string,
@@ -49,34 +48,32 @@ export abstract class Weapon extends Item {
   }
 
   public getDurability(): number {
-    return +(
-      this.baseDurability +
-      this.durabilityModifier -
-      Weapon.MODIFIER_CHANGE_RATE * this.numberOfUses
-    ).toFixed(3)
+    return this.baseDurability + this.durabilityModifier
   }
 
   public toString(): string {
-    return `${this.getName()} - Value: ${this.getValue()}, Weight: ${this.getWeight()}, Durability: ${this.getDurability()}%`
-  }
-
-  private checkPreviousUsageWithEmptyDurability(): boolean {
-    const prevNumbersOfUsage = this.numberOfUses - 1
-    if (this.getDurability() - prevNumbersOfUsage <= 0) {
-      return false
-    }
-    return true
+    return `${this.getName()} - Value: ${this.getValue()}, Weight: ${this.getWeight()}, Durability: ${toPercentage(
+      this.getDurability()
+    )}%`
   }
 
   public use(): string {
-    if (this.checkPreviousUsageWithEmptyDurability()) {
-      this.numberOfUses += 1
-      const isWeaponBroken = this.getDurability() <= 0
-      const brokenMessage = isWeaponBroken ? `The ${this.getName()} breaks` : ''
+    const name = this.getName()
+    const durability = this.getDurability()
 
-      return `You use the ${this.getName()}, dealing ${this.getDamage()} points of damage. ${brokenMessage}`
+    if (durability <= 0) {
+      return `You can't use the ${name}, it is broken.`
     }
 
-    return `You can't use the ${this.getName()}, it is broken.`
+    const damage = this.getDamage()
+    let message = `You use the ${name}, dealing ${damage} points of damage.`
+
+    const newDurability = durability - Weapon.MODIFIER_CHANGE_RATE
+    if (newDurability <= 0) {
+      this.baseDurability = newDurability - this.durabilityModifier
+      message += `The ${name} breaks.`
+    }
+
+    return message
   }
 }
