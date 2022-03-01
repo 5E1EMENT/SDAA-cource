@@ -1,8 +1,7 @@
-import { Page } from './Page';
-type T = /*unresolved*/ any;
+type Class = new (...args: any[]) => any;
 
-export const PagesIterable = (superclass: T) =>
-    class extends superclass {
+export function PagesIterable<SuperClass extends Class>(superclass: SuperClass) {
+    return class extends superclass {
         private counter = 0;
         public [Symbol.iterator]() {
             return {
@@ -21,3 +20,4 @@ export const PagesIterable = (superclass: T) =>
             };
         }
     };
+}
