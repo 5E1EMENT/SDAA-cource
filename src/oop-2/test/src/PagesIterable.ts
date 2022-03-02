@@ -6,9 +6,10 @@ export function PagesIterable<SuperClass extends Class>(superclass: SuperClass) 
         public [Symbol.iterator]() {
             return {
                 next: () => {
-                    const pagesLength = this.pages.pages.length;
+                    const pages = this.pages.getPages();
+                    const pagesLength = pages.length;
                     const firstPartOfText = this.toString();
-                    const secondPartOfText = this.pages.pages[this.counter].toString();
+                    const secondPartOfText = pages[this.counter].toString();
 
                     this.counter++;
 
