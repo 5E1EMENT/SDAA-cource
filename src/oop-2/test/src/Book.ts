@@ -18,6 +18,9 @@ export class Book extends Item {
     public getTitle(): string {
         return this.title;
     }
+    public getNumberOfPages(): number {
+        return this.getPages().length;
+    }
 
     toString(): string {
         return `Book: ${this.title} by ${this.author} with number of pages: ${this.getCounter()},`;

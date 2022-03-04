@@ -10,6 +10,10 @@ export class Comics extends Item {
         return this.title;
     }
 
+    public getNumberOfPages(): number {
+        return this.getPages().length;
+    }
+
     toString(): string {
         return `Comics: ${this.title} by ${this.author}, the artist is ${
             this.artist
