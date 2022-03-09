@@ -45,12 +45,16 @@ function App() {
     return rows
   }
 
+  const updateStore = (data): void => {
+    setData([...data])
+  }
+
   useEffect(() => {
     // fetching data from API
     Promise.all([getImages(), getUsers(), getAccounts()]).then(
       ([images, users, accounts]: [Image[], User[], Account[]]) => {
         const data = dataConverter(users, accounts, images)
-        setData(data)
+        updateStore(data)
       }
     )
   }, [])
@@ -61,7 +65,7 @@ function App() {
         <div className={styles.container}>
           <div className={styles.sortFilterContainer}>
             <Filters />
-            <Sort />
+            <Sort store={data} updateStore={updateStore} />
           </div>
           <Search />
         </div>
