@@ -1,11 +1,13 @@
-import { useState } from 'react';
-import Checkbox from '@mui/material/Checkbox';
+import { useState } from 'react'
+import Checkbox from '@mui/material/Checkbox'
 
-import styles from './Filters.module.scss';
+import styles from './Filters.module.scss'
+import { Row } from '../Table'
 
 interface FiltersProps {
-  store?: {};
-  updateStore?: (val) => void;
+  store?: Row[]
+  updateStore?: (val) => void
+  setDefaultStore?: () => void
 }
 
 // OR
@@ -24,31 +26,54 @@ const OPTIONS = [
   {
     title: 'More than 100 posts',
   },
-];
+]
 
 export function Filters(props: FiltersProps) {
-  const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
+  const { store, updateStore, setDefaultStore } = props
+  const [selectedFilter, setSelectedFilter] = useState<string[]>([])
 
   const onChange = ({ title }) => {
-    console.log(title); // for debugging
+    console.log(title) // for debugging
 
-    let updatedFilters;
-    if (selectedFilter.find((filter) => filter === title)) {
-      updatedFilters = selectedFilter.filter(
-        (filter) => filter !== title
-      );
+    let updatedFilters: string[]
+
+    if (selectedFilter.find(filter => filter === title)) {
+      updatedFilters = selectedFilter.filter(filter => filter !== title)
     } else {
-      updatedFilters = [...selectedFilter, title];
+      updatedFilters = [...selectedFilter, title]
     }
 
-    setSelectedFilter(updatedFilters);
-  };
+    setSelectedFilter(updatedFilters)
+    filterDataByPosts(updatedFilters)
+  }
+
+  const filterDataByPosts = (updatedFilters: string[]) => {
+    const withoutPosts = updatedFilters.find(item => item === 'Without posts')
+    const withMoreThan100Posts = updatedFilters.find(
+      item => item === 'More than 100 posts'
+    )
+    setDefaultStore()
+
+    if (withoutPosts) {
+      updateStore(store.filter(item => item.posts === 0))
+    }
+    if (withMoreThan100Posts) {
+      updateStore(store.filter(item => item.posts >= 100))
+    }
+
+    if (withoutPosts && withMoreThan100Posts) {
+      updateStore([
+        ...store.filter(item => item.posts === 0),
+        ...store.filter(item => item.posts >= 100),
+      ])
+    }
+  }
 
   return (
     <div className={styles.group}>
       <div className={styles.title}>Filter by posts</div>
       <ul className={styles.list}>
-        {OPTIONS.map((option) => (
+        {OPTIONS.map(option => (
           <li
             value={option.title}
             onClick={() => onChange(option)}
@@ -66,5 +91,5 @@ export function Filters(props: FiltersProps) {
         ))}
       </ul>
     </div>
-  );
+  )
 }

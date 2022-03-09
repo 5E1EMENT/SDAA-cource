@@ -18,6 +18,7 @@ const mockedData: Row[] = rows.data
 
 function App() {
   const [data, setData] = useState<Row[]>(undefined)
+  const [defaultData, setDefaultData] = useState<Row[]>(undefined)
 
   const dataConverter = (
     users: User[],
@@ -45,8 +46,12 @@ function App() {
     return rows
   }
 
-  const updateStore = (data): void => {
-    setData([...data])
+  const setStore = (store): void => {
+    setData([...store])
+  }
+  const setDefaultStore = (): void => {
+    console.log('set default store')
+    setData(defaultData)
   }
 
   useEffect(() => {
@@ -54,7 +59,8 @@ function App() {
     Promise.all([getImages(), getUsers(), getAccounts()]).then(
       ([images, users, accounts]: [Image[], User[], Account[]]) => {
         const data = dataConverter(users, accounts, images)
-        updateStore(data)
+        setStore(data)
+        setDefaultData(data)
       }
     )
   }, [])
@@ -64,10 +70,19 @@ function App() {
       <div className="App">
         <div className={styles.container}>
           <div className={styles.sortFilterContainer}>
-            <Filters />
-            <Sort store={data} updateStore={updateStore} />
+            <Filters
+              store={defaultData}
+              updateStore={setStore}
+              setDefaultStore={setDefaultStore}
+            />
+            <Sort store={data} updateStore={setStore} />
           </div>
-          <Search />
+          <Search
+            store={data}
+            defaultStore={defaultData}
+            updateStore={setStore}
+            setDefaultStore={setDefaultStore}
+          />
         </div>
         <Table rows={data || mockedData} />
       </div>
