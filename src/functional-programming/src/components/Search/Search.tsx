@@ -7,7 +7,6 @@ import styles from './Search.module.scss'
 import { Row } from '../Table'
 import _ from 'lodash'
 interface SearchProps {
-  store?: Row[]
   defaultStore?: Row[]
   updateStore?: (val) => void
   setDefaultStore?: () => void
@@ -23,19 +22,25 @@ interface SearchProps {
 // OR store can be global
 
 export function Search(props: SearchProps) {
-  const { defaultStore, store, updateStore, setDefaultStore } = props
+  const { defaultStore, updateStore, setDefaultStore } = props
   const [searchedValue, setSearchedValue] = useState<string>('')
 
   const onChange = value => {
     setSearchedValue(value)
     if (value !== '') {
       const filteredData = defaultStore.filter(item => {
-        return Object.values(item)
+        return Object.values({
+          country: item.country,
+          lastPayments: item.lastPayments,
+          name: item.name,
+          posts: item.posts,
+          username: item.username,
+        })
           .join('')
           .toLowerCase()
           .includes(value.toLowerCase())
       })
-      updateStore([..._.intersectionWith(filteredData, store, _.isEqual)])
+      updateStore([...filteredData])
     } else {
       setDefaultStore()
     }

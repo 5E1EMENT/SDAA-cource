@@ -78,7 +78,6 @@ function App() {
             <Sort store={data} updateStore={setStore} />
           </div>
           <Search
-            store={data}
             defaultStore={defaultData}
             updateStore={setStore}
             setDefaultStore={setDefaultStore}
