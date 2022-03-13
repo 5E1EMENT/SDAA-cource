@@ -50,7 +50,6 @@ function App() {
     setData([...store])
   }
   const setDefaultStore = (): void => {
-    console.log('set default store')
     setData(defaultData)
   }
 

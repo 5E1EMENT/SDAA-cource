@@ -33,8 +33,6 @@ export function Filters(props: FiltersProps) {
   const [selectedFilter, setSelectedFilter] = useState<string[]>([])
 
   const onChange = ({ title }) => {
-    console.log(title) // for debugging
-
     let updatedFilters: string[]
 
     if (selectedFilter.find(filter => filter === title)) {
