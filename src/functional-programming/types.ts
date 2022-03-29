@@ -16,7 +16,16 @@ interface Payment {
 }
 
 export interface Account {
-  userID: string;
-  posts: number;
-  payments: Payment[];
+  userID: string
+  posts: number
+  payments: Payment[]
+}
+
+export interface UserAccountInfo {
+  lastPayments: number
+  posts: number
+}
+
+export interface UserInfo extends User, UserAccountInfo {
+  avatar: string
 }

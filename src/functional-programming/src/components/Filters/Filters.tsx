@@ -1,25 +1,13 @@
-import { useState } from 'react'
+import { useCallback } from 'react'
 import Checkbox from '@mui/material/Checkbox'
 
 import styles from './Filters.module.scss'
-import { Row } from '../Table'
 
-interface FiltersProps {
-  store?: Row[]
-  updateStore?: (val) => void
-  setDefaultStore?: () => void
+export interface FilterOption {
+  title: string
 }
 
-// OR
-
-//interface FiltersProps {
-//  selected?: {};
-//  updateSelected?: (val) => void;
-//}
-
-// OR store can be global
-
-const OPTIONS = [
+const OPTIONS: FilterOption[] = [
   {
     title: 'Without posts',
   },
@@ -28,44 +16,26 @@ const OPTIONS = [
   },
 ]
 
-export function Filters(props: FiltersProps) {
-  const { store, updateStore, setDefaultStore } = props
-  const [selectedFilter, setSelectedFilter] = useState<string[]>([])
+interface FiltersProps {
+  value: string[]
+  onChange(value: string[]): void
+}
 
-  const onChange = ({ title }) => {
-    let updatedFilters: string[]
+export function Filters({ value, onChange }: FiltersProps) {
+  const handleChange = useCallback(
+    ({ title }) => {
+      let updatedFilters: string[]
 
-    if (selectedFilter.find(filter => filter === title)) {
-      updatedFilters = selectedFilter.filter(filter => filter !== title)
-    } else {
-      updatedFilters = [...selectedFilter, title]
-    }
+      if (value.find(filter => filter === title)) {
+        updatedFilters = value.filter(filter => filter !== title)
+      } else {
+        updatedFilters = [...value, title]
+      }
 
-    setSelectedFilter(updatedFilters)
-    filterDataByPosts(updatedFilters)
-  }
-
-  const filterDataByPosts = (updatedFilters: string[]) => {
-    const withoutPosts = updatedFilters.find(item => item === 'Without posts')
-    const withMoreThan100Posts = updatedFilters.find(
-      item => item === 'More than 100 posts'
-    )
-    setDefaultStore()
-
-    if (withoutPosts) {
-      updateStore(store.filter(item => item.posts === 0))
-    }
-    if (withMoreThan100Posts) {
-      updateStore(store.filter(item => item.posts >= 100))
-    }
-
-    if (withoutPosts && withMoreThan100Posts) {
-      updateStore([
-        ...store.filter(item => item.posts === 0),
-        ...store.filter(item => item.posts >= 100),
-      ])
-    }
-  }
+      onChange(updatedFilters)
+    },
+    [value, onChange]
+  )
 
   return (
     <div className={styles.group}>
@@ -74,13 +44,13 @@ export function Filters(props: FiltersProps) {
         {OPTIONS.map(option => (
           <li
             value={option.title}
-            onClick={() => onChange(option)}
+            onClick={() => handleChange(option)}
             key={option.title}
           >
             <Checkbox
-              checked={!!selectedFilter.find(filter => filter === option.title)}
+              checked={!!value.find(filter => filter === option.title)}
               value={option.title}
-              onChange={() => onChange(option)}
+              onChange={() => handleChange(option)}
               size="small"
               color="primary"
             />{' '}
