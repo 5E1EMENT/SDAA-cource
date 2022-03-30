@@ -26,7 +26,7 @@ export class Shipper {
 
   public getCost() {
     const shipperContext = new Context()
-    console.log(2222222, this.client)
+    // console.log(2222222, this.client)
     switch (true) {
       case this.client.getZipCode() < 3: {
         shipperContext.setStrategy(new AirEastShipper())
@@ -46,6 +46,6 @@ export class Shipper {
       }
     }
 
-    console.log(shipperContext.executeStrategy(this.client.getWeight()))
+    // console.log(shipperContext.executeStrategy(this.client.getWeight()))
   }
 }
