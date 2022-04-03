@@ -31,6 +31,7 @@ export class Shipment {
 
     const shipment = ShipmentFactory.getShipment(this.client)
     shipper.setContext(shipment)
+    console.log(111, shipment)
     shipper.getCost()
   }
 }

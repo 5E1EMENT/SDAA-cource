@@ -8,7 +8,6 @@ export interface Client {
   FromZipCode: string
   Weight: number
   getWeight?: () => number
-  getPrice?: () => number
   getZipCode?: () => number | string
 }
 
@@ -80,8 +79,8 @@ export class ClientBulder {
 
 const test = new ClientBulder()
   .setShipmentID()
-  .setToZipCode('570')
-  .setWeight(50)
+  .setToZipCode('170')
+  .setWeight(350)
   .build()
 
 test.makeRequest(test.client)
