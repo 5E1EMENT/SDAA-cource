@@ -1,6 +1,6 @@
-import { Client } from './Client'
+import { Shipment } from './Shipment'
 import {
-  Context,
+  ShipperStrategy,
   AirEastShipper,
   ChicagoSprintShipper,
   PacificParcelShipper,
@@ -8,7 +8,6 @@ import {
 
 export class Shipper {
   public static shipper: Shipper
-  private client: Client
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
@@ -20,32 +19,27 @@ export class Shipper {
     return Shipper.shipper
   }
 
-  public setContext(client: any) {
-    this.client = client
-  }
-
-  public getCost() {
-    const shipperContext = new Context()
-    // console.log(2222222, this.client)
+  public getCost(shipment: Shipment) {
+    const shipperStrategy = new ShipperStrategy()
     switch (true) {
-      case this.client.getZipCode() < 3: {
-        shipperContext.setStrategy(new AirEastShipper())
+      case shipment.getZipCode() < 3: {
+        shipperStrategy.setStrategy(new AirEastShipper())
         break
       }
-      case this.client.getZipCode() >= 4 && this.client.getZipCode() <= 6: {
-        shipperContext.setStrategy(new ChicagoSprintShipper())
+      case shipment.getZipCode() >= 4 && shipment.getZipCode() <= 6: {
+        shipperStrategy.setStrategy(new ChicagoSprintShipper())
         break
       }
-      case this.client.getZipCode() >= 7 && this.client.getZipCode() <= 9: {
-        shipperContext.setStrategy(new PacificParcelShipper())
+      case shipment.getZipCode() >= 7 && shipment.getZipCode() <= 9: {
+        shipperStrategy.setStrategy(new PacificParcelShipper())
         break
       }
       default: {
-        shipperContext.setStrategy(new AirEastShipper())
+        shipperStrategy.setStrategy(new AirEastShipper())
         break
       }
     }
 
-    // console.log(shipperContext.executeStrategy(this.client.getWeight()))
+    return shipperStrategy.executeStrategy(shipment.Weight)
   }
 }

@@ -1,9 +1,9 @@
-abstract class ShipperStrategy {
+abstract class IShipperStrategy {
   abstract getCost(weight: number): number
 }
 
-export class AirEastShipper extends ShipperStrategy {
-  getCost(weight: number): number {
+const mapShipperStrategy = {
+  getAirEastShipperCost(weight: number): number {
     if (weight < 15) {
       return weight * 0.39
     } else if (weight > 15 && weight <= 160) {
@@ -11,10 +11,8 @@ export class AirEastShipper extends ShipperStrategy {
     } else {
       return 10
     }
-  }
-}
-export class ChicagoSprintShipper extends ShipperStrategy {
-  getCost(weight: number) {
+  },
+  getChicagoSprintShipperCost(weight: number): number {
     if (weight < 15) {
       return weight * 0.42
     } else if (weight > 15 && weight <= 160) {
@@ -22,10 +20,8 @@ export class ChicagoSprintShipper extends ShipperStrategy {
     } else {
       return 0
     }
-  }
-}
-export class PacificParcelShipper extends ShipperStrategy {
-  getCost(weight: number) {
+  },
+  getPacificParcelShipperCost(weight: number): number {
     if (weight < 15) {
       return weight * 0.51
     } else if (weight > 15 && weight <= 160) {
@@ -33,13 +29,29 @@ export class PacificParcelShipper extends ShipperStrategy {
     } else {
       return weight * 0.21
     }
+  },
+}
+
+export class AirEastShipper extends IShipperStrategy {
+  getCost(weight: number): number {
+    return mapShipperStrategy.getAirEastShipperCost(weight)
+  }
+}
+export class ChicagoSprintShipper extends IShipperStrategy {
+  getCost(weight: number) {
+    return mapShipperStrategy.getChicagoSprintShipperCost(weight)
+  }
+}
+export class PacificParcelShipper extends IShipperStrategy {
+  getCost(weight: number) {
+    return mapShipperStrategy.getPacificParcelShipperCost(weight)
   }
 }
 
-export class Context {
-  private strategy: ShipperStrategy
+export class ShipperStrategy {
+  private strategy: IShipperStrategy
 
-  public setStrategy(strategy: ShipperStrategy) {
+  public setStrategy(strategy: IShipperStrategy) {
     this.strategy = strategy
   }
 

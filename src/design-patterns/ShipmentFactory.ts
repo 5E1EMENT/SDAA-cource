@@ -1,19 +1,6 @@
-import { Client } from './Client'
+import { IShipment, Shipment } from './Shipment'
 
-export abstract class Parcel implements Client {
-  ShipmentID: number
-  ToAddress: string
-  FromAddress: string
-  ToZipCode: string
-  FromZipCode: string
-  Weight: number
-  Type: string
-
-  abstract getZipCode(): string
-  abstract getWeight(): number
-}
-
-export class Letter implements Parcel {
+export class Letter implements IShipment {
   ShipmentID: number
   ToAddress: string
   FromAddress: string
@@ -29,7 +16,7 @@ export class Letter implements Parcel {
     ToZipCode,
     FromZipCode,
     Weight,
-  }: Parcel) {
+  }: IShipment) {
     this.ShipmentID = ShipmentID
     this.ToAddress = ToAddress
     this.FromAddress = FromAddress
@@ -39,15 +26,12 @@ export class Letter implements Parcel {
     this.Type = 'Letter'
   }
 
-  getZipCode(): string {
-    return this.ToZipCode
-  }
   getWeight(): number {
     return this.Weight
   }
 }
 
-export class Package implements Parcel {
+export class Package implements IShipment {
   ShipmentID: number
   ToAddress: string
   FromAddress: string
@@ -63,7 +47,7 @@ export class Package implements Parcel {
     ToZipCode,
     FromZipCode,
     Weight,
-  }: Parcel) {
+  }: IShipment) {
     this.ShipmentID = ShipmentID
     this.ToAddress = ToAddress
     this.FromAddress = FromAddress
@@ -73,15 +57,12 @@ export class Package implements Parcel {
     this.Type = 'Package'
   }
 
-  getZipCode(): string {
-    return this.ToZipCode
-  }
   getWeight(): number {
     return this.Weight
   }
 }
 
-export class Oversized implements Parcel {
+export class Oversized implements IShipment {
   ShipmentID: number
   ToAddress: string
   FromAddress: string
@@ -97,7 +78,7 @@ export class Oversized implements Parcel {
     ToZipCode,
     FromZipCode,
     Weight,
-  }: Parcel) {
+  }: IShipment) {
     this.ShipmentID = ShipmentID
     this.ToAddress = ToAddress
     this.FromAddress = FromAddress
@@ -107,23 +88,20 @@ export class Oversized implements Parcel {
     this.Type = 'Oversized'
   }
 
-  getZipCode(): string {
-    return this.ToZipCode
-  }
   getWeight(): number {
     return this.Weight
   }
 }
 
 export class ShipmentFactory {
-  static getShipment(client: any) {
+  static getShipmentType(shipment: Shipment) {
     switch (true) {
-      case client.Weight <= 15:
-        return new Letter(client)
-      case client.Weight > 15 && client.Weight <= 160:
-        return new Package(client)
+      case shipment.getWeight() <= 15:
+        return new Letter(shipment)
+      case shipment.getWeight() > 15 && shipment.getWeight() <= 160:
+        return new Package(shipment)
       default:
-        return new Oversized(client)
+        return new Oversized(shipment)
     }
   }
 }

@@ -1,86 +1,32 @@
 import { Shipment } from './Shipment'
+import { ShipmentBuilder } from './ShipmentBuilder'
 
-export interface Client {
-  ShipmentID: number
-  ToAddress: string
-  FromAddress: string
-  ToZipCode: string
-  FromZipCode: string
-  Weight: number
-  getWeight?: () => number
-  getZipCode?: () => number | string
-}
+export class Client {
+  constructor(private shipment: Shipment) {}
 
-export class ClientBulder {
-  private readonly _client: Client
-
-  public static ShipmentID = 0
-
-  constructor() {
-    this._client = {
-      ShipmentID: 0,
-      ToAddress: '',
-      FromAddress: '',
-      ToZipCode: '',
-      FromZipCode: '',
-      Weight: 10,
-      getZipCode() {
-        return +this._client.ToZipCode[0]
-      },
-      getWeight() {
-        return this._client.Weight
-      },
-    }
-  }
-
-  setShipmentID(ShipmentID?: number): ClientBulder {
-    this._client.ShipmentID = ShipmentID || ClientBulder.ShipmentID++
-    return this
-  }
-
-  setToAddress(toAddress: string): ClientBulder {
-    this._client.ToAddress = toAddress
-    return this
-  }
-
-  setFromAddress(fromAddress: string): ClientBulder {
-    this._client.FromAddress = fromAddress
-    return this
-  }
-
-  setToZipCode(toZipCode: string): ClientBulder {
-    this._client.ToZipCode = toZipCode
-    return this
-  }
-
-  setFromZipCode(fromZipCode: string): ClientBulder {
-    this._client.FromZipCode = fromZipCode
-    return this
-  }
-
-  setWeight(weight: number): ClientBulder {
-    this._client.Weight = weight
-    return this
-  }
-
-  makeRequest(client: Client): void {
-    const shipment = Shipment.getInstance()
-    shipment.setClient(client)
-    shipment.makeShip()
-  }
-
-  build() {
-    return {
-      client: this._client,
-      makeRequest: this.makeRequest,
-    }
+  makeShip() {
+    this.shipment.ship(this.shipment)
   }
 }
 
-const test = new ClientBulder()
-  .setShipmentID()
-  .setToZipCode('170')
-  .setWeight(350)
-  .build()
+const shipment = new ShipmentBuilder().build({
+  ToAddress: 'California',
+  FromAddress: 'New York',
+  ToZipCode: '111222',
+  FromZipCode: '111500',
+  Weight: 60,
+})
 
-test.makeRequest(test.client)
+const test = new Client(shipment)
+test.makeShip()
+
+const shipment2 = new ShipmentBuilder().build({
+  ToAddress: 'Chicago',
+  FromAddress: 'Texas',
+  ToZipCode: '555666',
+  FromZipCode: '777888',
+  Weight: 5,
+})
+
+const test2 = new Client(shipment2)
+test2.makeShip()

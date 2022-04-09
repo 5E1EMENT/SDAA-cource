@@ -1,37 +1,51 @@
-import { Client } from './Client'
 import { ShipmentFactory } from './ShipmentFactory'
 import { Shipper } from './Shipper'
-let shipmentId = 0
 
-export class Shipment {
-  private static shipment: Shipment
-  private client: Client
+export interface IShipment {
+  ShipmentID?: number
+  ToAddress: string
+  FromAddress: string
+  ToZipCode: string
+  FromZipCode: string
+  Weight: number
+}
 
-  private constructor() {
-    shipmentId += 1
-  }
+export class Shipment implements IShipment {
+  private static instance: Shipment
+  ShipmentID = 0
+  ToAddress: string
+  FromAddress: string
+  ToZipCode: string
+  FromZipCode: string
+  Weight: number
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
 
   public getShipmentID() {
-    return shipmentId
+    return this.ShipmentID
   }
 
-  public setClient(client: Client) {
-    this.client = client
+  public getZipCode(): number {
+    return +Shipment.instance.ToZipCode[0]
+  }
+
+  getWeight() {
+    return Shipment.instance.Weight
   }
 
   public static getInstance() {
-    if (!Shipment.shipment) {
-      Shipment.shipment = new Shipment()
+    if (!Shipment.instance) {
+      Shipment.instance = new Shipment()
     }
-    return Shipment.shipment
+    return Shipment.instance
   }
 
-  public makeShip() {
+  public ship(shipment: Shipment): void {
     const shipper = Shipper.getInstance()
+    const cost = shipper.getCost(shipment)
+    console.log('cost', cost)
 
-    const shipment = ShipmentFactory.getShipment(this.client)
-    shipper.setContext(shipment)
-    console.log(111, shipment)
-    shipper.getCost()
+    const shipmentParcel = ShipmentFactory.getShipmentType(shipment)
+    console.log('shipmentParcel', shipmentParcel)
   }
 }
