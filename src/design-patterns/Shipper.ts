@@ -19,7 +19,7 @@ export class Shipper {
     return Shipper.shipper
   }
 
-  public getCost(shipment: Shipment) {
+  public getShipperData(shipment: Shipment) {
     const shipperStrategy = new ShipperStrategy()
     switch (true) {
       case shipment.getZipCode() < 3: {

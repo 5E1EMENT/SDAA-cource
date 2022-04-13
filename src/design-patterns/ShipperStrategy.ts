@@ -1,5 +1,9 @@
 abstract class IShipperStrategy {
+  name: string
   abstract getCost(weight: number): number
+  getName() {
+    return this.name
+  }
 }
 
 const mapShipperStrategy = {
@@ -33,16 +37,19 @@ const mapShipperStrategy = {
 }
 
 export class AirEastShipper extends IShipperStrategy {
+  name = 'AirEastShipper'
   getCost(weight: number): number {
     return mapShipperStrategy.getAirEastShipperCost(weight)
   }
 }
 export class ChicagoSprintShipper extends IShipperStrategy {
+  name = 'ChicagoSprintShipper'
   getCost(weight: number) {
     return mapShipperStrategy.getChicagoSprintShipperCost(weight)
   }
 }
 export class PacificParcelShipper extends IShipperStrategy {
+  name = 'PacificParcelShipper'
   getCost(weight: number) {
     return mapShipperStrategy.getPacificParcelShipperCost(weight)
   }
@@ -56,6 +63,10 @@ export class ShipperStrategy {
   }
 
   public executeStrategy(weight: number) {
-    return this.strategy.getCost(weight)
+    const strategyData = {
+      cost: this.strategy.getCost(weight),
+      shipperName: this.strategy.getName(),
+    }
+    return strategyData
   }
 }

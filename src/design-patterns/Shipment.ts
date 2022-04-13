@@ -42,10 +42,14 @@ export class Shipment implements IShipment {
 
   public ship(shipment: Shipment): void {
     const shipper = Shipper.getInstance()
-    const cost = shipper.getCost(shipment)
-    console.log('cost', cost)
-
+    const { cost, shipperName } = shipper.getShipperData(shipment)
     const shipmentParcel = ShipmentFactory.getShipmentType(shipment)
-    console.log('shipmentParcel', shipmentParcel)
+    console.log(
+      `id: ${this.getShipmentID()}, to: ${this.ToAddress}, from ${
+        this.FromAddress
+      }, shipperName: ${shipperName} cost: ${cost}$, weight: ${
+        shipmentParcel.Weight
+      }, shipment type: ${shipmentParcel.Type}`
+    )
   }
 }
