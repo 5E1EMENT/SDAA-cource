@@ -13,7 +13,7 @@ const mapShipperStrategy = {
     } else if (weight > 15 && weight <= 160) {
       return weight * 0.25
     } else {
-      return 10
+      return weight * 0.39 + 10
     }
   },
   getChicagoSprintShipperCost(weight: number): number {
@@ -31,7 +31,7 @@ const mapShipperStrategy = {
     } else if (weight > 15 && weight <= 160) {
       return weight * 0.19
     } else {
-      return weight * 0.21
+      return weight * (0.21 + 0.02)
     }
   },
 }
