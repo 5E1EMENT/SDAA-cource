@@ -51,11 +51,11 @@ class PriorityQueue {
 
 const pq = new PriorityQueue()
 
-for (let i = 0; i < 5; i++) {
-  const randomNumber = pq.getRandomNumber(0, 5)
+for (let i = 0; i < 10000; i++) {
+  const randomNumber = pq.getRandomNumber(0, 10000)
   pq.enqueue(randomNumber, randomNumber)
 }
 
 //pq.dequeue()
 pq.toString()
-pq.print()
+// pq.print()
