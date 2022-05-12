@@ -2,6 +2,7 @@ import { Edge } from './Edge'
 import { Vertex } from './Vertex'
 import { WeightedGraph } from './WeightedGraph'
 import { Dijkstra } from './Dijkstra'
+
 const vertex1 = new Vertex('1')
 const vertex2 = new Vertex('2')
 const vertex3 = new Vertex('3')
@@ -24,9 +25,7 @@ edges.forEach(edge => graph.addEdge(edge.from, edge.to, edge.weight))
 
 console.log(graph)
 
-// graph.removeEdge(vertex1, vertex2)
-// console.log(graph)
-
 const dijkstra: Dijkstra = new Dijkstra(graph)
 
-console.log(dijkstra.findShortestPath(vertex4, vertex3))
+console.log('findShortestPaths', dijkstra.findShortestPath(vertex4, vertex3))
+console.log('findAllShortestPaths', dijkstra.findAllShortestPaths(vertex4))
