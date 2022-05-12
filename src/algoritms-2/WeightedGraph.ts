@@ -7,15 +7,21 @@ export interface WeightedGraph {
 
 export class WeightedGraph implements WeightedGraph {
   adjList: Record<string, any> = {}
+  private vertexsList: Array<Vertex> = []
   addVertex(vertex: Vertex): void {
     const key = vertex.verticle
     if (!this.adjList[key]) {
       this.adjList[key] = {}
     }
+    this.vertexsList.push(vertex)
   }
   addEdge(vertex1: string, vertex2: string, weight: number): void {
     this.adjList[vertex1][vertex2] = weight
     this.adjList[vertex2][vertex1] = weight
+  }
+
+  getVertexList(): Vertex[] {
+    return this.vertexsList
   }
 
   removeEdge(vertex1: Vertex, vertex2: Vertex) {

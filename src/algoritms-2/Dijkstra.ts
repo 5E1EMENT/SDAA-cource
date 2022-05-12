@@ -7,14 +7,15 @@ interface Path {
 }
 
 interface DijkstraInterface {
-  findShortestPath(vertex1: Vertex, vertex2: Vertex): void
-  //   findAllShortestPaths(vertex: Vertex): Record<string, Path>
+  findShortestPath(vertex1: Vertex, vertex2: Vertex): Path
+  findAllShortestPaths(vertex: Vertex): Record<string, Path>
 }
 
 export class Dijkstra implements DijkstraInterface {
   costFromStartTo: Record<string, any> = {}
-  prev: Record<string, any> = {}
+  prev: Record<string, string> = {}
   checkList = new PriorityQueue()
+  allShortestPaths: Record<string, Path> = {}
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private graph: WeightedGraph) {}
   findShortestPath(vertex1: Vertex, vertex2: Vertex): Path {
@@ -23,14 +24,14 @@ export class Dijkstra implements DijkstraInterface {
 
     let current
     const result = []
-    for (const vert in this.graph.adjList) {
-      if (vert === vertex1Key) {
-        this.costFromStartTo[vert] = 0
-        this.checkList.enqueue(vert, 0)
+    for (const vertex in this.graph.adjList) {
+      if (vertex === vertex1Key) {
+        this.costFromStartTo[vertex] = 0
+        this.checkList.enqueue(vertex, 0)
       } else {
-        this.costFromStartTo[vert] = Infinity
+        this.costFromStartTo[vertex] = Infinity
       }
-      this.prev[vert] = null
+      this.prev[vertex] = null
     }
     while (this.checkList.queue.length) {
       current = this.checkList.dequeue()
@@ -57,5 +58,16 @@ export class Dijkstra implements DijkstraInterface {
       distance: this.costFromStartTo[vertex2Key],
     }
   }
-  //   findAllShortestPaths(vertex: Vertex): Record<string, Path> {}
+  findAllShortestPaths(vertexStart: Vertex): any {
+    const vertexsList = this.graph.getVertexList()
+    vertexsList.forEach(vertexEnd => {
+      if (vertexStart != vertexEnd) {
+        this.allShortestPaths[vertexEnd.verticle] = this.findShortestPath(
+          vertexStart,
+          vertexEnd
+        )
+      }
+    })
+    return this.allShortestPaths
+  }
 }
